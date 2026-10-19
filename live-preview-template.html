@@ -1,0 +1,880 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mahira Jewels — Fine Lab-Grown Diamond Jewelry</title>
+<style>
+  :root {
+    --bg: #FAF9F5; --surface: #FFFFFF; --ink: #201E1A; --muted: #7C7870;
+    --accent: #AD8A3E; --accent-deep: #8A6D2F; --line: #E8E2D3; --badge-bg: #F2EDE0;
+    --s-bg: #14120F; --s-ink: #F2EEE4; --s-muted: #B9B3A6; --s-accent: #C9A24B;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+  button, input, select { font-family: inherit; }
+
+  .banner { background: var(--s-bg); color: var(--s-ink); text-align: center; font-size: 12px; padding: 8px 16px; letter-spacing: .03em; }
+  .banner b { color: var(--s-accent); }
+
+  /* ---------- Header ---------- */
+  .site-header { position: sticky; top: 0; z-index: 40; background: rgba(250,249,245,.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .site-header-inner { max-width: 1280px; margin: 0 auto; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex-shrink: 0; cursor: pointer; }
+  .logo svg { width: 27px; height: 27px; color: var(--accent); }
+  .logo-text { font-size: 17px; font-weight: 700; letter-spacing: .06em; line-height: 1; }
+  .logo-text span { font-weight: 400; color: var(--muted); font-size: 10px; display: block; letter-spacing: .14em; text-transform: uppercase; margin-top: 3px; }
+  nav.main-nav { display: flex; gap: 24px; flex-wrap: wrap; }
+  nav.main-nav a { font-size: 13px; text-decoration: none; color: var(--ink); white-space: nowrap; letter-spacing: .02em; cursor: pointer; }
+  nav.main-nav a:hover { color: var(--accent-deep); }
+  .header-icons { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+  .header-icons button { background: none; border: none; cursor: pointer; color: var(--ink); padding: 7px; border-radius: 50%; position: relative; }
+  .header-icons button:hover { background: var(--badge-bg); }
+  .header-icons svg { width: 18px; height: 18px; display: block; }
+  .count-badge {
+    position: absolute; top: 0; right: 0; min-width: 15px; height: 15px; border-radius: 999px;
+    background: var(--accent-deep); color: #fff; font-size: 9.5px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; padding: 0 3px;
+  }
+  .count-badge.empty { display: none; }
+
+  /* ---------- Card heart ---------- */
+  .card .fav-btn {
+    position: absolute; top: 8px; right: 8px; z-index: 2;
+    width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,.92); display: flex; align-items: center; justify-content: center;
+    color: var(--muted); box-shadow: 0 2px 8px rgba(32,30,26,.15);
+  }
+  .card .fav-btn svg { width: 16px; height: 16px; }
+  .card .fav-btn.active { color: #C0392B; }
+  .card .fav-btn.active svg path { fill: #C0392B; }
+
+  /* ---------- Cart / wishlist views ---------- */
+  .panel-view { display: none; padding: 34px 0 60px; }
+  .panel-view.active { display: block; }
+  .panel-view h1 { font-size: clamp(22px, 3vw, 30px); font-weight: 650; margin: 0 0 22px; }
+  .cart-lines { display: flex; flex-direction: column; gap: 14px; max-width: 760px; }
+  .cart-line {
+    display: grid; grid-template-columns: 84px 1fr auto; gap: 16px; align-items: center;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 14px;
+  }
+  .cart-line img { width: 84px; height: 84px; object-fit: cover; border-radius: 3px; }
+  .cart-line .cl-name { font-size: 13.5px; line-height: 1.4; margin: 0 0 4px; font-weight: 600; }
+  .cart-line .cl-opts { font-size: 12px; color: var(--muted); }
+  .cart-line .cl-price { font-size: 15px; font-weight: 700; text-align: right; }
+  .cart-line .cl-actions { display: flex; gap: 10px; align-items: center; justify-content: flex-end; margin-top: 6px; }
+  .qty-btn { width: 26px; height: 26px; border: 1px solid var(--line); background: var(--surface); border-radius: 3px; cursor: pointer; font-size: 14px; }
+  .cl-remove { background: none; border: none; color: var(--muted); font-size: 12px; cursor: pointer; text-decoration: underline; }
+  .cart-total {
+    max-width: 760px; margin-top: 20px; padding: 18px; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 4px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .cart-total .sum { font-size: 20px; font-weight: 700; }
+  .cta.wa-cta { background: #25D366; border-color: #25D366; color: #fff; }
+  .cta.wa-cta:hover { background: #1EBE5A; }
+  .empty-view { color: var(--muted); font-size: 14px; padding: 40px 0; }
+  @media (max-width: 900px) { nav.main-nav { display: none; } }
+
+  .shell { max-width: 1280px; margin: 0 auto; padding: 0 22px; }
+
+  /* ---------- Hero ---------- */
+  .hero { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 48px; padding: 56px 0 40px; }
+  .kicker { font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-deep); margin: 0 0 16px; font-weight: 600; }
+  .hero h1 { font-size: clamp(32px, 4.4vw, 52px); line-height: 1.06; margin: 0 0 18px; font-weight: 650; letter-spacing: -0.015em; text-wrap: balance; }
+  .hero .sub { color: var(--muted); font-size: 15.5px; max-width: 46ch; line-height: 1.7; margin: 0 0 28px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 13px; }
+  .cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--ink); color: var(--bg); border: 1px solid var(--ink); border-radius: 3px; font-size: 13.5px; font-weight: 600; text-decoration: none; cursor: pointer; letter-spacing: .02em; }
+  .cta:hover { background: #000; }
+  .cta.ghost { background: transparent; color: var(--ink); border-color: #CFC8B6; }
+  .cta.ghost:hover { border-color: var(--ink); background: transparent; }
+  .hero-art { border-radius: 4px; overflow: hidden; background: var(--surface); box-shadow: 0 24px 60px -30px rgba(32,30,26,.5); position: relative; }
+  .hero-art img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .hero-tag { position: absolute; left: 14px; bottom: 14px; background: rgba(20,18,15,.82); color: var(--s-ink); font-size: 11.5px; padding: 8px 14px; border-radius: 3px; letter-spacing: .04em; backdrop-filter: blur(4px); }
+  .hero-tag b { color: var(--s-accent); }
+  @media (max-width: 780px) { .hero { grid-template-columns: 1fr; gap: 28px; } .hero-art { max-width: 420px; } }
+
+  /* ---------- Trust strip ---------- */
+  .trust { display: flex; flex-wrap: wrap; gap: 12px 30px; padding: 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: 12.5px; color: var(--muted); margin: 4px 0 0; }
+  .trust span { display: inline-flex; align-items: center; gap: 8px; }
+  .trust svg { width: 15px; height: 15px; color: var(--accent); flex-shrink: 0; }
+  .trust b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Section heads ---------- */
+  section { scroll-margin-top: 84px; }
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; margin: 54px 0 24px; flex-wrap: wrap; }
+  .section-head h2 { font-size: clamp(21px, 2.6vw, 29px); margin: 0; font-weight: 650; letter-spacing: -0.012em; }
+  .section-head .side { color: var(--muted); font-size: 13px; }
+
+  /* ---------- Category tiles ---------- */
+  .cat-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .cat-tile { position: relative; border-radius: 4px; overflow: hidden; cursor: pointer; border: 1px solid var(--line); background: var(--surface); }
+  .cat-tile img { width: 100%; aspect-ratio: 1 / .82; object-fit: cover; transition: transform .35s ease; }
+  .cat-tile:hover img { transform: scale(1.045); }
+  .cat-tile .label { position: absolute; inset: auto 0 0 0; padding: 26px 14px 12px; background: linear-gradient(transparent, rgba(20,18,15,.78)); color: #fff; font-size: 13.5px; font-weight: 600; letter-spacing: .03em; }
+  .cat-tile .label small { display: block; font-weight: 400; font-size: 11px; opacity: .85; margin-top: 2px; }
+  @media (max-width: 780px) { .cat-tiles { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+
+  /* ---------- Controls ---------- */
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 0 0 14px; }
+  #search { flex: 1; min-width: 200px; padding: 12px 18px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; background: var(--surface); color: var(--ink); }
+  #search:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  #sortSel { padding: 11px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: 13px; background: var(--surface); color: var(--ink); cursor: pointer; }
+  #resultCount { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px; }
+  .chip { padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); font-size: 12.5px; color: var(--muted); background: var(--surface); cursor: pointer; }
+  .chip:hover { border-color: var(--accent); }
+  .chip.is-active { border-color: var(--accent); color: var(--accent-deep); font-weight: 600; background: var(--badge-bg); }
+
+  /* ---------- Product grid ---------- */
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: var(--ink); cursor: pointer; transition: box-shadow .2s ease, border-color .2s ease; }
+  .card:hover { border-color: #CFC8B6; box-shadow: 0 14px 34px -22px rgba(32,30,26,.4); }
+  .card .thumb { aspect-ratio: 1; background: var(--badge-bg); overflow: hidden; position: relative; }
+  .card .thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+  .card:hover .thumb img { transform: scale(1.05); }
+  .card .off { position: absolute; top: 10px; left: 10px; background: var(--s-bg); color: var(--s-accent); font-size: 10.5px; font-weight: 600; padding: 4px 9px; border-radius: 2px; letter-spacing: .05em; }
+  .card .info { padding: 13px 15px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .card .cat { font-size: 10px; letter-spacing: .09em; text-transform: uppercase; color: var(--accent-deep); font-weight: 600; }
+  .card .name { font-size: 13px; line-height: 1.45; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; }
+  .card .price { font-size: 15px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .card .price s { font-weight: 400; color: var(--muted); font-size: 12px; margin-left: 7px; }
+  .empty { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 14px; }
+  .loadmore-wrap { text-align: center; margin: 34px 0 0; }
+  #loadMore { padding: 13px 30px; border-radius: 3px; border: 1px solid var(--ink); background: transparent; color: var(--ink); font-size: 13.5px; cursor: pointer; font-weight: 600; }
+  #loadMore:hover { background: var(--ink); color: var(--bg); }
+  #loadMore:disabled { opacity: .35; cursor: default; }
+  @media (max-width: 520px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } .card .info { padding: 10px 11px 13px; } }
+
+  /* ---------- Shop by shape ---------- */
+  .shapes { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 8px; }
+  .shape-btn { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 10px 13px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); cursor: pointer; flex: 1; min-width: 86px; transition: border-color .15s ease; }
+  .shape-btn:hover { border-color: var(--accent); }
+  .shape-btn svg { width: 34px; height: 34px; color: var(--accent-deep); }
+  .shape-btn span { font-size: 12px; color: var(--ink); letter-spacing: .02em; }
+  @media (max-width: 640px) { .shape-btn { min-width: 30%; } }
+
+  /* ---------- Why us ---------- */
+  .why { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .why-card { border: 1px solid var(--line); border-radius: 4px; background: var(--surface); padding: 26px 22px; }
+  .why-card svg { width: 26px; height: 26px; color: var(--accent); margin-bottom: 14px; }
+  .why-card h3 { font-size: 15.5px; margin: 0 0 8px; font-weight: 650; }
+  .why-card p { font-size: 13px; color: var(--muted); line-height: 1.65; margin: 0; }
+  @media (max-width: 780px) { .why { grid-template-columns: 1fr; } }
+
+  /* ---------- Reviews ---------- */
+  .reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .review-card { border: 1px solid var(--line); border-radius: 4px; background: var(--surface); padding: 22px; display: flex; flex-direction: column; gap: 12px; }
+  .stars { display: flex; gap: 3px; color: var(--accent); }
+  .stars svg { width: 14px; height: 14px; }
+  .review-card p { font-size: 13.5px; line-height: 1.65; margin: 0; color: var(--ink); }
+  .review-card .who { font-size: 12px; color: var(--muted); font-weight: 600; }
+  @media (max-width: 780px) { .reviews { grid-template-columns: 1fr; } }
+
+  /* ---------- Statement section ---------- */
+  .statement { background: var(--s-bg); color: var(--s-ink); margin-top: 64px; }
+  .statement-inner { max-width: 1280px; margin: 0 auto; padding: 58px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
+  .statement .kicker { color: var(--s-accent); }
+  .statement h3 { font-family: "Bodoni MT", Didot, Georgia, serif; font-size: clamp(28px, 3.8vw, 44px); line-height: 1.06; margin: 0 0 16px; font-weight: 600; }
+  .statement p { color: var(--s-muted); max-width: 44ch; font-size: 14.5px; line-height: 1.7; margin: 0 0 24px; }
+  .statement .cta { background: var(--s-accent); color: var(--s-bg); border-color: var(--s-accent); }
+  .statement .cta:hover { background: #D9B45E; }
+  .statement-art { border-radius: 4px; overflow: hidden; border: 1px solid #2C2A25; }
+  .statement-art img { width: 100%; aspect-ratio: 1 / .85; object-fit: cover; }
+  @media (max-width: 780px) { .statement-inner { grid-template-columns: 1fr; } }
+
+  /* ---------- Product detail ---------- */
+  .detail { display: none; padding: 34px 0 20px; }
+  .detail.active { display: block; }
+  .home.hidden { display: none; }
+  .crumb { font-size: 12.5px; color: var(--muted); margin-bottom: 22px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .crumb a { cursor: pointer; text-decoration: none; color: var(--accent-deep); font-weight: 600; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: start; }
+  .detail-media { position: sticky; top: 90px; }
+  .detail-img { border-radius: 4px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); }
+  .detail-img img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .gallery-strip { display: flex; gap: 10px; margin-top: 10px; }
+  .gallery-strip button { border: 1px solid var(--line); border-radius: 3px; overflow: hidden; background: var(--surface); padding: 0; cursor: pointer; width: 72px; height: 72px; flex-shrink: 0; }
+  .gallery-strip button.is-active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .gallery-strip img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .detail-desc { border-top: 1px solid var(--line); padding-top: 18px; margin-top: 4px; }
+  .detail-desc h4 { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+  .detail-desc p { font-size: 13.5px; line-height: 1.7; color: var(--ink); margin: 0; white-space: pre-line; max-height: 9.5em; overflow: hidden; }
+  .detail-desc.open p { max-height: none; }
+  .detail-desc .more { background: none; border: none; color: var(--accent-deep); font-size: 12.5px; font-weight: 600; cursor: pointer; padding: 8px 0 0; }
+  .detail-info .cat { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-deep); font-weight: 600; }
+  .detail-info h1 { font-size: clamp(20px, 2.6vw, 28px); line-height: 1.3; margin: 10px 0 18px; font-weight: 650; letter-spacing: -0.01em; }
+  .price-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .price-big { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .price-old { color: var(--muted); text-decoration: line-through; font-size: 16px; }
+  .save-badge { background: var(--badge-bg); color: var(--accent-deep); font-size: 11.5px; font-weight: 700; padding: 5px 10px; border-radius: 999px; letter-spacing: .04em; }
+  .detail-note { font-size: 12.5px; color: var(--muted); margin: 0 0 22px; }
+  .opts { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+  .opts label { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 7px; }
+  .opts select { width: 100%; padding: 13px 14px; border: 1px solid var(--line); border-radius: 3px; font-size: 14px; background: var(--surface); color: var(--ink); }
+  .detail-ctas { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
+  .detail-ctas .cta { justify-content: center; width: 100%; padding: 16px; font-size: 14px; }
+  .detail-perks { border-top: 1px solid var(--line); padding-top: 18px; display: flex; flex-direction: column; gap: 11px; font-size: 13px; color: var(--muted); }
+  .detail-perks span { display: flex; gap: 10px; align-items: center; }
+  .detail-perks svg { width: 15px; height: 15px; color: var(--accent); flex-shrink: 0; }
+  .related-head { margin: 54px 0 20px; font-size: 19px; font-weight: 650; }
+  @media (max-width: 780px) { .detail-grid { grid-template-columns: 1fr; gap: 24px; } .detail-img { position: static; } }
+
+  /* ---------- WhatsApp float ---------- */
+  .wa-float {
+    position: fixed; right: 18px; bottom: 18px; z-index: 60;
+    width: 54px; height: 54px; border-radius: 50%;
+    background: #25D366; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px -6px rgba(37, 211, 102, .55);
+    transition: transform .15s ease;
+  }
+  .wa-float:hover { transform: scale(1.07); }
+  .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+  @media (max-width: 520px) { .wa-float { width: 50px; height: 50px; right: 14px; bottom: 14px; } }
+
+  /* ---------- Footer ---------- */
+  footer.site-footer { background: var(--s-bg); color: #D8D3C5; margin-top: 72px; }
+  .footer-inner { max-width: 1280px; margin: 0 auto; padding: 54px 22px 30px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 36px; }
+  .footer-inner h4 { color: var(--s-ink); font-size: 12.5px; text-transform: uppercase; letter-spacing: .1em; margin: 0 0 16px; font-weight: 600; }
+  .footer-inner p { font-size: 13px; line-height: 1.75; color: #ADA895; margin: 0; max-width: 36ch; }
+  .footer-inner ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+  .footer-inner a { font-size: 13px; color: #D8D3C5; text-decoration: none; cursor: pointer; }
+  .footer-inner a:hover { color: var(--s-accent); }
+  .footer-bottom { border-top: 1px solid #2C2A25; padding: 18px 22px; text-align: center; font-size: 11.5px; color: #8B8672; letter-spacing: .03em; }
+  @media (max-width: 780px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-logo-ring" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4.5">
+      <circle cx="50" cy="63" r="25"/>
+      <path d="M50 38 39 23 50 11 61 23Z" stroke-linejoin="round"/>
+      <path d="M39 23 50 32 61 23" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l1 14H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 5h14v11H1z"/><path d="M15 9h4l4 4v3h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3 6.6 7 .9-5.2 4.8 1.4 7-6.2-3.6L5.8 21l1.4-7L2 9.5l7-.9Z"/></symbol>
+    <symbol id="sh-round" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+      <circle cx="20" cy="20" r="14"/>
+      <path d="M29.9 10.1 27 13m-14 14-2.9 2.9M29.9 29.9 27 27M13 13l-2.9-2.9M20 6v4M20 30v4M6 20h4m20 0h4" opacity=".55"/>
+      <path d="M27 13h-14v14h14zM27 13l-7 7 7 7M13 13l7 7-7 7" opacity=".35"/>
+    </symbol>
+    <symbol id="sh-oval" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+      <ellipse cx="20" cy="20" rx="10" ry="14.5"/>
+      <ellipse cx="20" cy="20" rx="5.5" ry="8.5" opacity=".5"/>
+      <path d="M20 5.5v6M20 28.5v6M10 20h4.5M25.5 20H30" opacity=".4"/>
+    </symbol>
+    <symbol id="sh-pear" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M20 4.5C25 12 29.5 16.5 29.5 24a9.5 9.5 0 1 1-19 0C10.5 16.5 15 12 20 4.5Z"/>
+      <path d="M20 12c3 4.5 5.5 7.5 5.5 12a5.5 5.5 0 1 1-11 0c0-4.5 2.5-7.5 5.5-12Z" opacity=".5"/>
+    </symbol>
+    <symbol id="sh-emerald" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M13.5 6.5h13l7 7v13l-7 7h-13l-7-7v-13z"/>
+      <path d="M15.5 10h9l5.5 5.5v9L24.5 30h-9L10 24.5v-9z" opacity=".5"/>
+      <path d="M17.5 13.5h5l4 4v5l-4 4h-5l-4-4v-5z" opacity=".35"/>
+    </symbol>
+    <symbol id="sh-marquise" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M20 4c6.5 5 9 10.5 9 16s-2.5 11-9 16c-6.5-5-9-10.5-9-16s2.5-11 9-16Z"/>
+      <path d="M20 11c3.5 3 5 6 5 9s-1.5 6-5 9c-3.5-3-5-6-5-9s1.5-6 5-9Z" opacity=".5"/>
+    </symbol>
+    <symbol id="sh-princess" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="7.5" y="7.5" width="25" height="25"/>
+      <path d="M20 7.5 32.5 20 20 32.5 7.5 20Z" opacity=".5"/>
+      <rect x="14.5" y="14.5" width="11" height="11" opacity=".35"/>
+    </symbol>
+    <symbol id="sh-heart" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M20 34.5C12 27.5 6.5 22.5 6.5 16.4 6.5 11.7 10 8 14.3 8c2.4 0 4.6 1.3 5.7 3.4C21.1 9.3 23.3 8 25.7 8 30 8 33.5 11.7 33.5 16.4c0 6.1-5.5 11.1-13.5 18.1Z"/>
+      <path d="M20 28.5c-5-4.4-8.5-7.8-8.5-11.7 0-2.9 2.1-5.1 4.7-5.1 1.5 0 2.9.8 3.8 2.1.9-1.3 2.3-2.1 3.8-2.1 2.6 0 4.7 2.2 4.7 5.1 0 3.9-3.5 7.3-8.5 11.7Z" opacity=".45"/>
+    </symbol>
+    <symbol id="sh-cushion" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="7" y="7" width="26" height="26" rx="9"/>
+      <rect x="12.5" y="12.5" width="15" height="15" rx="5.5" opacity=".5"/>
+      <path d="M12.5 12.5 9 9m22 0-3.5 3.5m0 15L31 31M9 31l3.5-3.5" opacity=".35"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="banner"><b>Preview build</b> — prices are 5% below our live Etsy shop. Secure checkout launching soon.</div>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="logo" data-nav="home">
+      <svg viewBox="0 0 100 100"><use href="#i-logo-ring"/></svg>
+      <span class="logo-text">MAHIRA JEWELS<span>Lab-Grown Diamonds</span></span>
+    </a>
+    <nav class="main-nav">
+      <a data-cat-nav="Engagement Ring">Engagement</a>
+      <a data-cat-nav="Wedding Ring">Wedding</a>
+      <a data-cat-nav="Stud Earrings">Earrings</a>
+      <a data-cat-nav="Pendant">Pendants</a>
+      <a data-cat-nav="Tennis Bracelet">Bracelets</a>
+      <a data-cat-nav="All">All Jewelry</a>
+    </nav>
+    <div class="header-icons">
+      <button aria-label="Search" data-nav="search"><svg viewBox="0 0 24 24"><use href="#i-search"/></svg></button>
+      <button aria-label="Wishlist" data-nav="wish"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg><span class="count-badge empty" id="wishCount"></span></button>
+      <button aria-label="Bag" data-nav="cart"><svg viewBox="0 0 24 24"><use href="#i-bag"/></svg><span class="count-badge empty" id="cartCount"></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<div id="homeView" class="home">
+  <div class="shell">
+    <section class="hero">
+      <div>
+        <p class="kicker">IGI-Certified · 10k–18k Gold · Made in Surat</p>
+        <h1>Real diamonds, grown in a lab. Priced like it.</h1>
+        <p class="sub">761 handcrafted designs — engagement rings, wedding bands, earrings and pendants. Every piece 5% below our Etsy shop, with the same 5-star craftsmanship.</p>
+        <div class="cta-row">
+          <a class="cta" data-nav="shop">Shop the Collection</a>
+          <a class="cta ghost" data-cat-nav="Engagement Ring">Engagement Rings</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img src="__HERO_IMAGE__" alt="5 carat oval lab-grown blue diamond halo engagement ring" />
+        <div class="hero-tag"><b>Featured:</b> 5ct Oval Blue Diamond Halo</div>
+      </div>
+    </section>
+
+    <div class="trust">
+      <span><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><b>5.0</b> · 56 reviews</span>
+      <span><svg viewBox="0 0 24 24"><use href="#i-check"/></svg><b>135</b> sales on Etsy</span>
+      <span><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg><b>IGI Certified</b> diamonds</span>
+      <span><svg viewBox="0 0 24 24"><use href="#i-truck"/></svg>Free insured delivery</span>
+    </div>
+
+    <section id="shapes-sec">
+      <div class="section-head"><h2>Shop by Shape</h2><span class="side">The cut defines the sparkle</span></div>
+      <div class="shapes">
+        <button class="shape-btn" data-shape="round"><svg viewBox="0 0 40 40"><use href="#sh-round"/></svg><span>Round</span></button>
+        <button class="shape-btn" data-shape="oval"><svg viewBox="0 0 40 40"><use href="#sh-oval"/></svg><span>Oval</span></button>
+        <button class="shape-btn" data-shape="pear"><svg viewBox="0 0 40 40"><use href="#sh-pear"/></svg><span>Pear</span></button>
+        <button class="shape-btn" data-shape="emerald"><svg viewBox="0 0 40 40"><use href="#sh-emerald"/></svg><span>Emerald</span></button>
+        <button class="shape-btn" data-shape="marquise"><svg viewBox="0 0 40 40"><use href="#sh-marquise"/></svg><span>Marquise</span></button>
+        <button class="shape-btn" data-shape="princess"><svg viewBox="0 0 40 40"><use href="#sh-princess"/></svg><span>Princess</span></button>
+        <button class="shape-btn" data-shape="heart"><svg viewBox="0 0 40 40"><use href="#sh-heart"/></svg><span>Heart</span></button>
+        <button class="shape-btn" data-shape="cushion"><svg viewBox="0 0 40 40"><use href="#sh-cushion"/></svg><span>Cushion</span></button>
+      </div>
+    </section>
+
+    <section id="categories">
+      <div class="section-head"><h2>Shop by Category</h2><span class="side" id="catCountSide"></span></div>
+      <div class="cat-tiles" id="catTiles"></div>
+    </section>
+
+    <section id="shop">
+      <div class="section-head"><h2>The Collection</h2><span class="side" id="resultCount"></span></div>
+      <div class="controls">
+        <input id="search" type="text" placeholder="Search — oval, halo, pendant, tennis…" />
+        <select id="sortSel">
+          <option value="default">Featured</option>
+          <option value="price_asc">Price: Low to High</option>
+          <option value="price_desc">Price: High to Low</option>
+        </select>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="emptyState" style="display:none">No pieces match your search — try a different word.</div>
+      <div class="loadmore-wrap"><button id="loadMore">Show more</button></div>
+    </section>
+  </div>
+
+  <div class="shell">
+    <section id="why">
+      <div class="section-head"><h2>Why Mahira Jewels</h2></div>
+      <div class="why">
+        <div class="why-card">
+          <svg viewBox="0 0 24 24"><use href="#i-shield"/></svg>
+          <h3>IGI-Certified, Always</h3>
+          <p>Every lab-grown diamond ships with its IGI certificate — same physical, chemical and optical properties as mined diamonds, verified independently.</p>
+        </div>
+        <div class="why-card">
+          <svg viewBox="0 0 24 24"><use href="#i-check"/></svg>
+          <h3>5% Below Our Etsy Shop</h3>
+          <p>Buying direct means no marketplace fees — so every design here is priced 5% below its live Etsy listing. Same craftsmanship, better price.</p>
+        </div>
+        <div class="why-card">
+          <svg viewBox="0 0 24 24"><use href="#i-truck"/></svg>
+          <h3>Handcrafted in Surat</h3>
+          <p>Made to order in 10k–18k gold by our own manufacturing partner in Surat — the diamond capital of the world — with free insured worldwide delivery.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews-sec">
+      <div class="section-head"><h2>What Our Customers Say</h2><span class="side">5.0★ average · 56 reviews on Etsy</span></div>
+      <div class="reviews">
+        <div class="review-card">
+          <div class="stars"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></div>
+          <p>"Absolutely stunning! I placed another custom order and I'm so thrilled. The ring and diamond are truly stunning. The craftsmanship is top-notch. I highly recommend this shop."</p>
+          <span class="who">Daniela — Pink Princess Diamond Ring</span>
+        </div>
+        <div class="review-card">
+          <div class="stars"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></div>
+          <p>"This is as beautiful as described. Absolutely love this! It feels very light and natural on my finger."</p>
+          <span class="who">Jennifer — 1ct Round Lab-Grown Diamond Ring</span>
+        </div>
+        <div class="review-card">
+          <div class="stars"><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg><svg viewBox="0 0 24 24"><use href="#i-star"/></svg></div>
+          <p>"Seller was very responsive, excellent quality and craftsmanship."</p>
+          <span class="who">Michael — 5ct Oval Blue Diamond Ring</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="statement">
+    <div class="statement-inner">
+      <div>
+        <p class="kicker">One stone. No compromise.</p>
+        <h3>The Statement Collection</h3>
+        <p>Cathedral solitaires, pink and blue fancy diamonds, full tennis lines — our 3-carat-and-up pieces, IGI-certified and built for the moment that only happens once.</p>
+        <a class="cta" data-nav="statement">View Statement Pieces</a>
+      </div>
+      <div class="statement-art"><img src="__HERO_IMAGE__" alt="Statement diamond ring on dark background" /></div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= PRODUCT DETAIL ================= -->
+<div id="detailView" class="detail">
+  <div class="shell">
+    <div class="crumb"><a data-nav="home">Home</a> <span>/</span> <a id="crumbCat"></a> <span>/</span> <span id="crumbName"></span></div>
+    <div class="detail-grid">
+      <div class="detail-media">
+        <div class="detail-img"><img id="dImg" src="" alt="" /></div>
+        <div class="gallery-strip" id="dGallery"></div>
+      </div>
+      <div class="detail-info">
+        <span class="cat" id="dCat"></span>
+        <h1 id="dTitle"></h1>
+        <div class="price-row">
+          <span class="price-big" id="dPrice"></span>
+          <span class="price-old" id="dOld"></span>
+          <span class="save-badge" id="dSave"></span>
+        </div>
+        <p class="detail-note">Price includes the 5% off-Etsy launch discount. Free insured worldwide delivery.</p>
+        <div class="opts">
+          <div>
+            <label for="optSize">Ring Size (US)</label>
+            <select id="optSize"></select>
+          </div>
+          <div>
+            <label for="optMetal">Metal</label>
+            <select id="optMetal"></select>
+            <p id="matNote" style="display:none; font-size:11.5px; color:var(--muted); margin:7px 0 0; line-height:1.5;">Metal-wise price sync is in progress for this piece — the shown price is the base option. Final price is confirmed on the order page.</p>
+          </div>
+        </div>
+        <div class="detail-ctas">
+          <button class="cta" id="dAddBag">Add to Bag</button>
+          <button class="cta ghost" id="dFav">♡ Save to Wishlist</button>
+          <a class="cta ghost" id="dEtsy" href="#" target="_blank" rel="noopener">Order on Etsy →</a>
+        </div>
+        <div class="detail-perks">
+          <span><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg>IGI-certified lab-grown diamond with certificate</span>
+          <span><svg viewBox="0 0 24 24"><use href="#i-truck"/></svg>Free insured delivery &amp; easy returns</span>
+          <span><svg viewBox="0 0 24 24"><use href="#i-check"/></svg>Handcrafted to order in 10k / 14k / 18k gold</span>
+        </div>
+        <div class="detail-desc" id="dDescWrap" style="display:none">
+          <h4>About This Piece</h4>
+          <p id="dDesc"></p>
+          <button class="more" id="dDescMore">Read more</button>
+        </div>
+      </div>
+    </div>
+    <h3 class="related-head">You may also like</h3>
+    <div class="grid" id="relatedGrid"></div>
+  </div>
+</div>
+
+<!-- ================= WISHLIST VIEW ================= -->
+<div id="wishView" class="panel-view">
+  <div class="shell">
+    <h1>Your Wishlist</h1>
+    <div class="grid" id="wishGrid"></div>
+    <p class="empty-view" id="wishEmpty" style="display:none">Wishlist khali hai — kisi bhi product par ♡ dabao. / Your wishlist is empty — tap the ♡ on any piece.</p>
+    <p style="margin-top:26px"><a class="cta ghost" data-nav="shop">← Continue Shopping</a></p>
+  </div>
+</div>
+
+<!-- ================= CART VIEW ================= -->
+<div id="cartView" class="panel-view">
+  <div class="shell">
+    <h1>Your Bag</h1>
+    <div class="cart-lines" id="cartLines"></div>
+    <p class="empty-view" id="cartEmpty" style="display:none">Bag khali hai. / Your bag is empty — add a piece you love.</p>
+    <div class="cart-total" id="cartTotalBox" style="display:none">
+      <div><div style="font-size:12px;color:var(--muted)">Total (5% off Etsy included)</div><div class="sum" id="cartSum"></div></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="cta wa-cta" id="waCheckout" href="#" target="_blank" rel="noopener">Order via WhatsApp</a>
+        <a class="cta ghost" data-nav="shop">Continue Shopping</a>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:14px;max-width:60ch">Secure card checkout is coming soon. For now, orders are confirmed personally on WhatsApp — we reply within minutes with payment &amp; delivery details.</p>
+  </div>
+</div>
+
+<a class="wa-float" id="waFloat" href="https://wa.me/919033508476?text=Hi!%20I%27m%20interested%20in%20Mahira%20Jewels." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.1.6 4.1 1.6 5.9L4 29l8.4-1.6c1.7.9 3.6 1.4 5.6 1.4 6.6 0 12-5.3 12-11.9S22.6 3 16 3zm0 21.8c-1.8 0-3.5-.5-5-1.3l-.4-.2-5 1 1-4.8-.3-.4c-1-1.6-1.5-3.4-1.5-5.2 0-5.5 4.5-9.9 10.1-9.9s10.1 4.4 10.1 9.9-4.5 9.9-10 9.9zm5.5-7.4c-.3-.2-1.8-.9-2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6-.1-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.1 1.3 3.3c.2.2 2.3 3.6 5.7 5 .8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.8-.8 2.1-1.5.3-.7.3-1.3.2-1.5-.1-.1-.3-.2-.6-.3z"/></svg>
+</a>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <h4>Mahira Jewels</h4>
+      <p>Timeless, affordable luxury. IGI-certified lab-grown diamonds hand-set in solid gold — manufactured end-to-end in Surat, India, and loved by 5-star buyers worldwide.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <ul>
+        <li><a data-cat-nav="Engagement Ring">Engagement Rings</a></li>
+        <li><a data-cat-nav="Wedding Ring">Wedding Rings</a></li>
+        <li><a data-cat-nav="Stud Earrings">Earrings</a></li>
+        <li><a data-cat-nav="Pendant">Pendants</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <ul>
+        <li><a href="https://www.etsy.com/shop/MahiraJewelsUS#policies" target="_blank" rel="noopener">Shipping &amp; Returns</a></li>
+        <li><a href="https://www.etsy.com/shop/MahiraJewelsUS#policies" target="_blank" rel="noopener">Ring Size Guide</a></li>
+        <li><a href="https://www.igi.org/verify-your-report/" target="_blank" rel="noopener">IGI Certification</a></li>
+        <li><a href="https://www.etsy.com/messages/new?with_id=1073466957" target="_blank" rel="noopener">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Trust</h4>
+      <ul>
+        <li><a href="#reviews-sec">5.0★ · 56 Reviews</a></li>
+        <li><a href="https://www.etsy.com/shop/MahiraJewelsUS" target="_blank" rel="noopener">135 Sales on Etsy</a></li>
+        <li><a href="https://www.etsy.com/shop/MahiraJewelsUS" target="_blank" rel="noopener">Our Etsy Shop</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Mahira Jewels · Dubai, UAE. Preview build — full secure checkout coming soon.</div>
+</footer>
+
+<script>
+  const CATALOG = __CATALOG_DATA__;
+
+  const PAGE_SIZE = 48;
+  let shown = 0, activeCategory = 'All', query = '', sortMode = 'default';
+
+  const $ = id => document.getElementById(id);
+  const grid = $('grid'), chipsEl = $('chips'), loadMoreBtn = $('loadMore'),
+        resultCount = $('resultCount'), emptyState = $('emptyState'), searchInput = $('search');
+
+  const categoryCounts = CATALOG.reduce((a, it) => (a[it.c] = (a[it.c] || 0) + 1, a), {});
+  const categories = ['All', ...Object.keys(categoryCounts).sort((a, b) => categoryCounts[b] - categoryCounts[a])];
+  const money = n => '$' + n.toLocaleString('en-US', { maximumFractionDigits: 0 });
+
+  /* ---------- wishlist + cart state (localStorage) ---------- */
+  const store = {
+    get wish() { try { return JSON.parse(localStorage.getItem('mj_wish') || '[]'); } catch (e) { return []; } },
+    set wish(v) { localStorage.setItem('mj_wish', JSON.stringify(v)); updateBadges(); },
+    get cart() { try { return JSON.parse(localStorage.getItem('mj_cart') || '[]'); } catch (e) { return []; } },
+    set cart(v) { localStorage.setItem('mj_cart', JSON.stringify(v)); updateBadges(); },
+  };
+  function updateBadges() {
+    const w = store.wish.length, c = store.cart.reduce((n, l) => n + l.qty, 0);
+    const wb = $('wishCount'), cb = $('cartCount');
+    wb.textContent = w; wb.classList.toggle('empty', !w);
+    cb.textContent = c; cb.classList.toggle('empty', !c);
+  }
+  function toggleWish(id) {
+    const w = store.wish;
+    const i = w.indexOf(id);
+    if (i >= 0) w.splice(i, 1); else w.push(id);
+    store.wish = w;
+    return i < 0;
+  }
+  function addToCart(id, metal, metalPrice, size) {
+    const c = store.cart;
+    const key = id + '|' + metal + '|' + size;
+    const found = c.find(l => l.key === key);
+    if (found) found.qty += 1;
+    else c.push({ key, id, metal, metalPrice, size, qty: 1 });
+    store.cart = c;
+  }
+
+  /* ---------- views ---------- */
+  function hideAllViews() {
+    $('detailView').classList.remove('active');
+    $('wishView').classList.remove('active');
+    $('cartView').classList.remove('active');
+    $('homeView').classList.add('hidden');
+  }
+  function showHome() {
+    hideAllViews();
+    $('homeView').classList.remove('hidden');
+    $('waFloat').href = 'https://wa.me/919033508476?text=' + encodeURIComponent("Hi! I'm interested in Mahira Jewels.");
+  }
+  function showWish() {
+    hideAllViews();
+    $('wishView').classList.add('active');
+    window.scrollTo(0, 0);
+    const items = store.wish.map(id => CATALOG.find(x => x.id === id)).filter(Boolean);
+    $('wishGrid').innerHTML = items.map(cardHTML).join('');
+    bindCards($('wishGrid'));
+    $('wishEmpty').style.display = items.length ? 'none' : 'block';
+  }
+  function showCart() {
+    hideAllViews();
+    $('cartView').classList.add('active');
+    window.scrollTo(0, 0);
+    const lines = store.cart;
+    const rows = lines.map((l, idx) => {
+      const it = CATALOG.find(x => x.id === l.id);
+      if (!it) return '';
+      const unit = l.metalPrice || it.p;
+      return `<div class="cart-line">
+        <img src="${it.img}" alt="" />
+        <div>
+          <p class="cl-name">${it.t.slice(0, 80)}</p>
+          <span class="cl-opts">${l.metal || 'Metal: choose on WhatsApp'} · Size: ${l.size || 'TBD'}</span>
+          <div class="cl-actions">
+            <button class="qty-btn" data-cq="-1" data-ci="${idx}">−</button>
+            <span style="font-size:13px;min-width:18px;text-align:center">${l.qty}</span>
+            <button class="qty-btn" data-cq="1" data-ci="${idx}">+</button>
+            <button class="cl-remove" data-crm="${idx}">Remove</button>
+          </div>
+        </div>
+        <div class="cl-price">${money(unit * l.qty)}</div>
+      </div>`;
+    }).join('');
+    $('cartLines').innerHTML = rows;
+    $('cartEmpty').style.display = lines.length ? 'none' : 'block';
+    $('cartTotalBox').style.display = lines.length ? 'flex' : 'none';
+    if (lines.length) {
+      const total = lines.reduce((s, l) => { const it = CATALOG.find(x => x.id === l.id); return s + ((l.metalPrice || (it ? it.p : 0)) * l.qty); }, 0);
+      $('cartSum').textContent = money(total);
+      const msgLines = lines.map((l, i) => {
+        const it = CATALOG.find(x => x.id === l.id);
+        return `${i + 1}. ${it ? it.t.slice(0, 60) : l.id} | ${l.metal || 'metal TBD'} | size ${l.size || 'TBD'} | qty ${l.qty} | ${money((l.metalPrice || (it ? it.p : 0)) * l.qty)}`;
+      });
+      const msg = 'Hi! I want to order from Mahira Jewels:\n' + msgLines.join('\n') + '\nTotal: ' + money(total);
+      $('waCheckout').href = 'https://wa.me/919033508476?text=' + encodeURIComponent(msg);
+    }
+    $('cartView').querySelectorAll('[data-cq]').forEach(b => b.addEventListener('click', () => {
+      const c = store.cart, i = Number(b.dataset.ci);
+      c[i].qty += Number(b.dataset.cq);
+      if (c[i].qty <= 0) c.splice(i, 1);
+      store.cart = c; showCart();
+    }));
+    $('cartView').querySelectorAll('[data-crm]').forEach(b => b.addEventListener('click', () => {
+      const c = store.cart; c.splice(Number(b.dataset.crm), 1);
+      store.cart = c; showCart();
+    }));
+  }
+  function showDetail(id) {
+    const it = CATALOG.find(x => x.id === id);
+    if (!it) return;
+    hideAllViews();
+    $('detailView').classList.add('active');
+    window.scrollTo(0, 0);
+    // selected options state for Add to Bag
+    window.__sel = { id: it.id, metal: null, metalPrice: null, size: null };
+    // fav button state
+    const favBtn = $('dFav');
+    const setFavUI = () => { favBtn.textContent = store.wish.includes(it.id) ? '♥ In Wishlist' : '♡ Save to Wishlist'; };
+    setFavUI();
+    favBtn.onclick = () => { toggleWish(it.id); setFavUI(); };
+    // add to bag
+    $('dAddBag').onclick = () => {
+      addToCart(it.id, window.__sel.metal, window.__sel.metalPrice, window.__sel.size);
+      $('dAddBag').textContent = '✓ Added to Bag';
+      setTimeout(() => { $('dAddBag').textContent = 'Add to Bag'; }, 1400);
+    };
+    $('optSize').onchange = e => { window.__sel.size = e.target.value.startsWith('Select') ? null : e.target.value; };
+    $('dImg').src = it.img; $('dImg').alt = it.t;
+    $('dCat').textContent = it.c;
+    $('crumbCat').textContent = it.c;
+    $('crumbCat').onclick = () => { navCategory(it.c); };
+    $('crumbName').textContent = it.t.slice(0, 48) + (it.t.length > 48 ? '…' : '');
+    $('dTitle').textContent = it.t;
+    $('dPrice').textContent = money(it.p);
+    $('dOld').textContent = money(it.op);
+    $('dSave').textContent = 'SAVE 5%';
+    $('dEtsy').href = it.u;
+    // WhatsApp: product-specific message
+    const waMsg = encodeURIComponent(`Hi! I'm interested in: ${it.t.slice(0, 90)} (${money(it.p)})`);
+    $('waFloat').href = `https://wa.me/919033508476?text=${waMsg}`;
+    // gallery: extra angles as small previews (full gallery arrives with the production site)
+    const strip = $('dGallery');
+    strip.innerHTML = (it.g || []).map((src, i) =>
+      `<span style="border:1px solid var(--line);border-radius:3px;overflow:hidden;width:72px;height:72px;flex-shrink:0;display:inline-block"><img src="${src}" alt="alternate view" style="width:100%;height:100%;object-fit:cover;display:block" /></span>`
+    ).join('') + ((it.g || []).length ? '<span style="font-size:11px;color:var(--muted);align-self:center;padding-left:6px">+ more angles on order page</span>' : '');
+    // description
+    if (it.desc) {
+      $('dDescWrap').style.display = '';
+      $('dDescWrap').classList.remove('open');
+      $('dDesc').textContent = it.desc;
+      $('dDescMore').textContent = 'Read more';
+    } else {
+      $('dDescWrap').style.display = 'none';
+    }
+    // options
+    const sizes = [];
+    for (let s = 3; s <= 12; s += 0.5) sizes.push(s + ' US');
+    $('optSize').innerHTML = '<option>Select size</option>' + sizes.map(s => `<option>${s}</option>`).join('');
+    const matNote = document.getElementById('matNote');
+    if (it.mats && it.mats.length) {
+      $('optMetal').innerHTML = '<option value="-1">Select metal — price updates</option>' +
+        it.mats.map((m, i) => `<option value="${i}">${m[0]}${m[1] ? ' — ' + money(m[1]) : ''}</option>`).join('');
+      $('optMetal').onchange = e => {
+        const idx = Number(e.target.value);
+        const sel = idx >= 0 ? it.mats[idx] : null;
+        if (sel && sel[1]) {
+          $('dPrice').textContent = money(sel[1]); $('dOld').textContent = ''; $('dSave').textContent = sel[0];
+          window.__sel.metal = sel[0]; window.__sel.metalPrice = sel[1];
+        } else {
+          $('dPrice').textContent = money(it.p); $('dOld').textContent = money(it.op); $('dSave').textContent = 'SAVE 5%';
+          window.__sel.metal = sel ? sel[0] : null; window.__sel.metalPrice = null;
+        }
+      };
+      if (matNote) matNote.style.display = 'none';
+    } else {
+      const metals = ['925 Sterling Silver', '10k White Gold', '10k Yellow Gold', '10k Rose Gold', '14k White Gold', '14k Yellow Gold', '14k Rose Gold', '18k White Gold', '18k Yellow Gold', '18k Rose Gold', 'Platinum'];
+      $('optMetal').innerHTML = '<option>Select metal</option>' + metals.map(m => `<option>${m}</option>`).join('');
+      $('optMetal').onchange = e => { window.__sel.metal = e.target.value.startsWith('Select') ? null : e.target.value; window.__sel.metalPrice = null; };
+      if (matNote) matNote.style.display = '';
+    }
+    // related: same category, nearest price
+    const rel = CATALOG.filter(x => x.c === it.c && x.id !== it.id)
+      .sort((a, b) => Math.abs(a.p - it.p) - Math.abs(b.p - it.p)).slice(0, 4);
+    $('relatedGrid').innerHTML = rel.map(cardHTML).join('');
+    bindCards($('relatedGrid'));
+  }
+
+  /* ---------- cards ---------- */
+  function cardHTML(it) {
+    let priceHtml;
+    if (it.mats && it.mats.length > 1) {
+      const priced = it.mats.filter(m => m[1]);
+      const lo = Math.min(...priced.map(m => m[1]), it.p);
+      const hiMat = priced.reduce((a, b) => (b[1] > a[1] ? b : a), priced[0]);
+      priceHtml = hiMat && hiMat[1] > lo
+        ? `<span style="font-size:11px;color:var(--muted);font-weight:400">from </span>${money(lo)} <span style="font-size:11px;color:var(--muted);font-weight:400">· ${hiMat[0].replace(/\s*gold/i,'')} ${money(hiMat[1])}</span>`
+        : `${money(it.p)} <s>${money(it.op)}</s>`;
+    } else {
+      priceHtml = `<span style="font-size:11px;color:var(--muted);font-weight:400">from </span>${money(it.p)} <s>${money(it.op)}</s>`;
+    }
+    const faved = store.wish.includes(it.id);
+    return `<div class="card" data-id="${it.id}">
+      <div class="thumb" style="position:relative">
+        <span class="off">5% OFF vs ETSY</span>
+        <button class="fav-btn${faved ? ' active' : ''}" data-fav="${it.id}" aria-label="Save to wishlist"><svg viewBox="0 0 24 24" fill="${faved ? '#C0392B' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg></button>
+        <img src="${it.img}" alt="${it.t.replace(/"/g, '&quot;')}" loading="lazy" />
+      </div>
+      <div class="info">
+        <span class="cat">${it.c}</span>
+        <p class="name">${it.t}</p>
+        <span class="price">${priceHtml}</span>
+      </div>
+    </div>`;
+  }
+  function bindCards(root) {
+    root.querySelectorAll('.card').forEach(el => el.addEventListener('click', () => showDetail(el.dataset.id)));
+    root.querySelectorAll('.fav-btn').forEach(btn => btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const on = toggleWish(btn.dataset.fav);
+      btn.classList.toggle('active', on);
+      btn.querySelector('svg').setAttribute('fill', on ? '#C0392B' : 'none');
+      if ($('wishView').classList.contains('active')) showWish();
+    }));
+  }
+
+  /* ---------- category tiles ---------- */
+  const TILE_CATS = ['Engagement Ring', 'Stud Earrings', 'Pendant', 'Wedding Ring'];
+  $('catTiles').innerHTML = TILE_CATS.map(c => {
+    const item = CATALOG.find(x => x.c === c);
+    return `<div class="cat-tile" data-cat="${c}">
+      <img src="${item ? item.img : ''}" alt="${c}" loading="lazy" />
+      <div class="label">${c}<small>${categoryCounts[c] || 0} designs</small></div>
+    </div>`;
+  }).join('');
+  $('catTiles').querySelectorAll('.cat-tile').forEach(el =>
+    el.addEventListener('click', () => navCategory(el.dataset.cat)));
+  $('catCountSide').textContent = categories.length - 1 + ' categories · ' + CATALOG.length + ' designs';
+
+  /* ---------- chips / filtering ---------- */
+  function renderChips() {
+    chipsEl.innerHTML = categories.map(c => {
+      const count = c === 'All' ? CATALOG.length : categoryCounts[c];
+      return `<button class="chip${c === activeCategory ? ' is-active' : ''}" data-cat="${c}">${c} (${count})</button>`;
+    }).join('');
+    chipsEl.querySelectorAll('.chip').forEach(btn =>
+      btn.addEventListener('click', () => { activeCategory = btn.dataset.cat; renderChips(); renderGrid(true); }));
+  }
+  function getFiltered() {
+    const q = query.trim().toLowerCase();
+    let list = CATALOG.filter(it =>
+      (activeCategory === 'All' || it.c === activeCategory) &&
+      (!q || it.t.toLowerCase().includes(q)));
+    if (sortMode === 'price_asc') list = [...list].sort((a, b) => a.p - b.p);
+    if (sortMode === 'price_desc') list = [...list].sort((a, b) => b.p - a.p);
+    return list;
+  }
+  function renderGrid(reset) {
+    const filtered = getFiltered();
+    if (reset) { grid.innerHTML = ''; shown = 0; }
+    const slice = filtered.slice(shown, shown + PAGE_SIZE);
+    grid.insertAdjacentHTML('beforeend', slice.map(cardHTML).join(''));
+    bindCards(grid);
+    shown += slice.length;
+    resultCount.textContent = filtered.length + ' pieces';
+    emptyState.style.display = filtered.length === 0 ? 'block' : 'none';
+    loadMoreBtn.disabled = shown >= filtered.length;
+    loadMoreBtn.textContent = shown >= filtered.length ? 'All pieces shown' : `Show more (${filtered.length - shown} left)`;
+  }
+
+  /* ---------- nav ---------- */
+  function navCategory(cat) {
+    activeCategory = categoryCounts[cat] ? cat : 'All';
+    showHome(); renderChips(); renderGrid(true);
+    document.getElementById('shop').scrollIntoView();
+  }
+  document.querySelectorAll('[data-cat-nav]').forEach(el =>
+    el.addEventListener('click', () => navCategory(el.dataset.catNav)));
+  document.querySelectorAll('[data-nav]').forEach(el => el.addEventListener('click', () => {
+    const t = el.dataset.nav;
+    if (t === 'home') { showHome(); window.scrollTo({ top: 0 }); }
+    if (t === 'shop') { showHome(); document.getElementById('shop').scrollIntoView(); }
+    if (t === 'search') { showHome(); document.getElementById('shop').scrollIntoView(); setTimeout(() => searchInput.focus(), 300); }
+    if (t === 'wish') showWish();
+    if (t === 'cart') showCart();
+    if (t === 'statement') { activeCategory = 'All'; query = ''; searchInput.value = ''; sortMode = 'price_desc'; $('sortSel').value = 'price_desc'; showHome(); renderChips(); renderGrid(true); document.getElementById('shop').scrollIntoView(); }
+  }));
+  updateBadges();
+
+  document.querySelectorAll('.shape-btn').forEach(el => el.addEventListener('click', () => {
+    activeCategory = 'All';
+    query = el.dataset.shape;
+    searchInput.value = query;
+    showHome(); renderChips(); renderGrid(true);
+    document.getElementById('shop').scrollIntoView();
+  }));
+
+  document.getElementById('dDescMore').addEventListener('click', () => {
+    const w = document.getElementById('dDescWrap');
+    w.classList.toggle('open');
+    document.getElementById('dDescMore').textContent = w.classList.contains('open') ? 'Show less' : 'Read more';
+  });
+
+  loadMoreBtn.addEventListener('click', () => renderGrid(false));
+  searchInput.addEventListener('input', e => {
+    query = e.target.value;
+    if (query.trim() && activeCategory !== 'All') { activeCategory = 'All'; renderChips(); }
+    renderGrid(true);
+  });
+  $('sortSel').addEventListener('change', e => { sortMode = e.target.value; renderGrid(true); });
+
+  renderChips();
+  renderGrid(true);
+</script>
